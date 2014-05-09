@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<robot
+    xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+    xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+    xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
+    
+    <macro name="botmovil_wheel" params="suffix parent *origin *origin2 *origin3 *origin4">
+        <joint name="${parent}_${suffix}_wheel_joint" type="continuous">
+            <insert_block name="origin" />
+            <axis xyz="0 1 0" />
+            <anchor xyz="0 0 0" />
+            <limit effort="100" velocity="100" />
+            <joint_properties damping="0.0" friction="0.0" />
+            <parent link="${parent}" />
+            <child link="${parent}_${suffix}_wheel_link" />
+        </joint>
+        
+        <link name="${parent}_${suffix}_wheel_link">
+            <inertial>
+                <mass value="0.0520915" />
+                <insert_block name="origin2" />
+                <inertia  ixx="0.01125276766" ixy="-0.00010244389" ixz="-0.00022445513"
+                          iyy="0.00458462921" iyz="0.00008426529"
+                          izz="0.01359327745" />
+            </inertial>
+            
+            <visual>
+                <insert_block name="origin3" />
+                <geometry>
+                    <mesh filename="package://botmovil_description/meshes/collada/botmovil_wheel_link.dae"/>
+                </geometry>
+            </visual>
+            
+            <collision>
+                <insert_block name="origin4" />
+                <geometry>
+                    <cylinder radius="0.045" length = "0.015"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <gazebo reference="${parent}_${suffix}_wheel_link" >
+            <mu1 value="100.0" />
+            <mu2 value="100.0" />
+            <kp  value="1000000.0" />
+            <kd  value="1.0" />
+        </gazebo>
+
+        <transmission type="pr2_mechanism_model/SimpleTransmission" name="${parent}_${suffix}_wheel_trans">
+            <actuator name="${parent}_${suffix}_wheel_motor" />
+            <joint name="${parent}_${suffix}_wheel_joint" />
+            <mechanicalReduction>1.0</mechanicalReduction>
+        </transmission>
+    </macro>
+</robot>
+

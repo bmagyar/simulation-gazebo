@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" 
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+			name="aisoy" >
+
+  <!-- The following included files set up definitions of parts of the robot body -->
+  <!-- misc common stuff? -->
+  <include filename="$(find aisoy_description)/urdf/common.xacro" />
+
+  <!-- AISoy1 head -->
+  <include filename="$(find aisoy_description)/urdf/head/head.urdf.xacro" />
+
+  <!-- AISoy1 eyes 
+  <include filename="$(find aisoy_description)/urdf/eye/eye.urdf.xacro" /> -->
+
+  <!-- AISoy1 eyebrows -->
+  <include filename="$(find aisoy_description)/urdf/eyebrow/eyebrow.urdf.xacro" /> 
+
+  <!-- AISoy1 torso -->
+  <include filename="$(find aisoy_description)/urdf/torso/torso.urdf.xacro" />
+
+  <!-- Head sensors 
+  <include filename="$(find aisoy_description)/urdf/sensors/head_sensor_package.urdf.xacro" />-->
+
+  <!-- Camera sensors 
+  <include filename="$(find aisoy_description)/urdf/sensors/wge100_camera.urdf.xacro" />-->
+
+  <!-- generic simulator_gazebo plugins for starting mechanism control, ros time, ros battery -->
+  <include filename="$(find aisoy_description)/gazebo/gazebo.urdf.xacro" />
+
+  <!-- materials for visualization -->
+  <include filename="$(find aisoy_description)/urdf/materials.urdf.xacro" /> 
+
+  <xacro:aisoy_torso name="torso" parent="base_link"  /> 
+  <xacro:aisoy_head name="head" parent="torso_link" /> 
+<!--
+  <xacro:aisoy_eye side="l" reflect="1" parent="head_link" />
+  <xacro:aisoy_eye side="r" reflect="-1" parent="head_link" />
+-->
+  <xacro:aisoy_eyebrow name="eyebrow" side="l" reflect="1" parent="head_tilt_link" />
+  <xacro:aisoy_eyebrow name="eyebrow" side="r" reflect="-1" parent="head_tilt_link" />
+
+</robot>

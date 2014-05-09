@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <property name="M_PI" value="3.14159"/>
+
+  <!-- Macro for AISoy1 without feet -->
+  <xacro:macro name="aisoy1_feetless">
+
+  <joint name="aisoy_base_joint" type="fixed">
+    <origin xyz="0.03146297 0 0.08943" rpy="0 0 0" />  
+    <parent link="base_link"/>
+    <child link="aisoy_base_link" />
+  </joint>
+
+  <link name="aisoy_base_link">
+    <inertial>
+      <mass value="0.8719666" />
+      <origin xyz="-0.0367783 -0.0001796 0.0401515" />
+      <inertia ixx="0.0023358" ixy="-0.0000055" ixz="-0.0001764"
+        iyy="0.0024065" iyz="0.0000061" izz="0.0017460" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://botmovil_description/meshes/collada/aisoy1_torso_feetless.dae"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="-0.0332797 0.0 0.0605" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.121" radius="0.06"/>
+      </geometry>
+    </collision>
+  </link>   
+ 
+  <joint name="base_head_joint" type="revolute">
+    <origin xyz="-0.043 0.0 0.121" rpy="0 0 0" />
+    <axis xyz="0 0 1"/>   
+    <limit effort="10.0" lower="${M_PI/-2}" upper="${M_PI/2}" velocity="${M_PI}"/>   
+    <calibration rising="0.0"/>   
+    <parent link="aisoy_base_link"/>
+    <child link="head_link" />
+  </joint>
+
+  <link name="head_link">
+    <inertial>
+      <mass value="0.1134772" />
+      <origin xyz="-0.0016012 0.0003076 0.0592513" />
+      <inertia ixx="0.0004418" ixy="-0.0000033" ixz="-0.0000301"
+        iyy="0.0003612" iyz="-0.0000008" izz="0.0004281" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0.043 0 -0.121" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aisoy_description/meshes/head/head.dae"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="-0.0 0.0 0.047" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.047"/>
+      </geometry>
+    </collision>
+
+  </link>    
+
+  <joint name="head_eyebrow_l_joint" type="revolute">
+    <origin xyz="0.030 0.012 0.08681" rpy="0 0 0" />
+    <axis xyz="1 0 0"/>   
+    <limit effort="10.0" lower="${M_PI/-6}" upper="${M_PI/8}" velocity="${M_PI}"/>   
+    <calibration rising="0.0"/>   
+    <parent link="head_link"/>
+    <child link="eyebrow_l_link" />
+  </joint>
+
+  <link name="eyebrow_l_link">
+    <inertial>
+      <mass value="0.0044168" />
+      <origin xyz="0.0014088 0.0043205 0.0030777" />
+      <inertia ixx="0.0000002" ixy="0.0" ixz="0.0"
+        iyy="0.0" iyz="0.0" izz="0.0000002" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0.013 -0.012 -0.20781" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aisoy_description/meshes/eyebrow/eyebrow_l.dae"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="-0.0 0.005 0.002" rpy="0 0 0" />
+      <geometry>
+        <box size="0.004 0.023 0.004" />
+      </geometry>
+    </collision>
+
+  </link> 
+
+  <joint name="head_eyebrow_r_joint" type="revolute">
+    <origin xyz="0.030 -0.012 0.08681" rpy="0 0 0" />
+    <axis xyz="-1 0 0"/>   
+    <limit effort="10.0" lower="${M_PI/-6}" upper="${M_PI/8}" velocity="${M_PI}"/>   
+    <calibration rising="0.0"/>   
+    <parent link="head_link"/>
+    <child link="eyebrow_r_link" />
+  </joint>
+
+  <link name="eyebrow_r_link">
+    <inertial>
+      <mass value="0.0044168" />
+      <origin xyz="0.0014088 -0.0043205 0.0030777" />
+      <inertia ixx="0.0000002" ixy="0.0" ixz="0.0"
+        iyy="0.0" iyz="0.0" izz="0.0000002" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0.013 0.012 -0.20781" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://aisoy_description/meshes/eyebrow/eyebrow_r.dae"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="-0.0 -0.005 0.002" rpy="0 0 0" />
+      <geometry>
+        <box size="0.004 0.023 0.004" />
+      </geometry>
+    </collision>
+
+  </link> 
+
+  </xacro:macro>
+
+</robot>

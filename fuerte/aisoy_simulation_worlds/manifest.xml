@@ -1,0 +1,14 @@
+<package>
+  <description brief="aisoy_worlds">
+
+     aisoy_worlds
+
+  </description>
+  <author>pgarcia</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/aisoy_worlds</url>
+
+</package>
+
+

@@ -1,0 +1,16 @@
+<package>
+  <description brief="botmovil_description">
+
+     botmovil_description provides a complete 3D model of the Botmovil for simulation and visualization. 
+
+  </description>
+  <author>Maintained by Ivan Soriano</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://wiki.aisoy.es</url>
+  <depend package="urdf"/>
+  <depend package="xacro"/>
+
+</package>
+
+

@@ -1,0 +1,11 @@
+<stack>
+  <description brief="botmovil_simulator">Simulation components for Botmovil.</description>
+  <author>Maintained by Ivan Soriano</author>
+  <license>BSD</license>  
+  <review status="unreviewed" notes=""/>
+  <url>http://wiki.aisoy.com</url>
+  <depend stack="common_msgs" /> <!-- nav_msgs, sensor_msgs, geometry_msgs -->
+  <depend stack="ros" />
+  <depend stack="simulator_gazebo" /> <!-- gazebo -->
+
+</stack>

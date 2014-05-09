@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <property name="M_PI" value="3.14159"/>
+
+<xacro:macro name="botmovil_kinect">
+  <joint name="base_camera_joint" type="fixed">
+    <origin xyz="0.00134744 0 0.0630001" 
+            rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="camera_link" />
+  </joint>
+
+  <link name="camera_link">
+    <inertial>
+      <mass value="0.8633102" />
+      <origin xyz="-0.0299525 0.0000232 -0.0064098" />
+      <inertia ixx="0.0041326" ixy="0.0000006" ixz="0.0000058"
+        iyy="0.0005470" iyz="0.0000002" izz="0.0041042" />
+    </inertial>
+
+    <visual>
+      <origin xyz=" 0 0 0 " rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://botmovil_description/meshes/collada/kinect.dae"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="-0.03 0.0 0.0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.06 .255 0.035"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+  <joint name="camera_depth_joint" type="fixed">
+    <origin xyz="0 0.018 0" rpy="0 0 0" />
+    <parent link="camera_link" />
+    <child link="camera_depth_frame" />
+  </joint>
+
+  <link name="camera_depth_frame">
+    <inertial>
+      <mass value="0.01" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0"
+        izz="0.001" />
+    </inertial>
+  </link>
+
+  <joint name="camera_depth_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+    <parent link="camera_depth_frame" />
+    <child link="camera_depth_optical_frame" />
+  </joint>
+
+  <link name="camera_depth_optical_frame">
+    <inertial>
+      <mass value="0.001" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+        iyy="0.0001" iyz="0.0"
+        izz="0.0001" />
+    </inertial>
+  </link>
+
+  <joint name="camera_rgb_joint" type="fixed">
+    <origin xyz="0 -0.005 0" rpy="0 0 0" />
+    <parent link="camera_link" />
+    <child link="camera_rgb_frame" />
+  </joint>
+
+  <link name="camera_rgb_frame">
+    <inertial>
+      <mass value="0.001" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+        iyy="0.0001" iyz="0.0"
+        izz="0.0001" />
+    </inertial>
+  </link>
+
+  <joint name="camera_rgb_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+    <parent link="camera_rgb_frame" />
+    <child link="camera_rgb_optical_frame" />
+  </joint>
+
+  <link name="camera_rgb_optical_frame">
+    <inertial>
+      <mass value="0.001" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+        iyy="0.0001" iyz="0.0"
+        izz="0.0001" />
+    </inertial>
+  </link>
+
+  <joint name="laser_joint" type="fixed">
+    <!--origin xyz="0.00134744 0 0.0630001" rpy="0 0 0" /-->
+    <origin xyz="0.00134744 0 0.13" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="laser" />
+  </joint>
+
+  <link name="laser">
+    <visual>
+      <geometry>
+        <box size="0.02 0.035 0.002" />
+      </geometry>
+      <material name="Green" />
+    </visual>
+
+    <inertial>
+      <mass value="0.001" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+        iyy="0.0001" iyz="0.0"
+        izz="0.0001" />
+    </inertial>
+  </link>
+
+  <!-- Kinect sensor for Gazebo simulation -->
+  <botmovil_sim_kinect/>
+  <botmovil_sim_laser/>
+
+</xacro:macro>
+
+</robot>

@@ -1,0 +1,22 @@
+<package>
+  <description brief="botmovil_gazebo">
+
+     Launch files for a simulated Botmovil robot in Gazebo
+
+  </description>
+  <author>Maintained by Ivan Soriano</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://wiki.aisoy.es</url>
+
+    <depend package="gazebo" />
+    <depend package="gazebo_tools" />
+    <depend package="botmovil_gazebo_plugins"/>
+    <depend package="gazebo_worlds"/>
+    <depend package="robot_state_publisher"/>
+    <depend package="laser_filters"/>
+    <depend package="robot_self_filter"/>
+
+</package>
+
+

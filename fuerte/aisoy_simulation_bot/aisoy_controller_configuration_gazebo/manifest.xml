@@ -1,0 +1,14 @@
+<package>
+  <description brief="aisoy_controller_configuration_gazebo">
+
+     aisoy_controller_configuration_gazebo
+
+  </description>
+  <author>pgarcia</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/aisoy_controller_configuration_gazebo</url>
+
+</package>
+
+

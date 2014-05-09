@@ -1,0 +1,7 @@
+<launch>
+    <!-- send AISoy1 urdf to param server -->
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find aisoy_description)/robots/aisoy.urdf.xacro'" />
+
+    <!-- the semantic description that corresponds to the URDF -->
+    <param name="robot_description_semantic" textfile="$(find aisoy_description)/robots/aisoy.srdf" />
+</launch>

@@ -1,0 +1,11 @@
+<stack>
+  <description brief="aisoy_simulator">Simulation components for AISoy1 Robot.</description>
+  <author>Maintained by Ivan Soriano and Pablo Garcia</author>
+  <license>BSD</license>  
+  <review status="unreviewed" notes=""/>
+  <url>http://wiki.aisoy.com</url>
+  <depend stack="common_msgs" /> <!-- nav_msgs, sensor_msgs, geometry_msgs -->
+  <depend stack="ros" />
+  <depend stack="simulator_gazebo" /> <!-- gazebo -->
+
+</stack>

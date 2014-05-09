@@ -1,0 +1,11 @@
+<launch>
+  
+  <!-- Startup AISoy1 without any mechanism controllers -->
+  <include file="$(find aisoy_gazebo)/aisoy_no_controllers.launch" />
+
+  <!-- Load and Start Default Controllers  -->
+  <include file="$(find aisoy_controller_configuration_gazebo)/aisoy_default_controllers.launch" />
+	<!-- <include file="$(find pr2_controller_configuration_gazebo)/pr2_default_controllers.launch" /> -->
+
+</launch>
+

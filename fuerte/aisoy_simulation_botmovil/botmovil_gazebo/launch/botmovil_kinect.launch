@@ -1,0 +1,77 @@
+<launch>
+
+    <!-- send the Botmovil robot with Kinect XML to param server -->
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find botmovil_description)/urdf/botmovil_kinect.urdf.xacro'" />
+
+    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <node name="spawn_robot" pkg="gazebo" type="spawn_model"
+          args="-param robot_description
+                -urdf
+                -z 0.01
+                -model Botmovil"
+          respawn="false" output="screen" />
+
+    <!-- start robot state publisher -->
+    <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" output="screen" >
+        <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+
+
+  <!-- The odometry estimator -->
+
+  <!--node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+    <param name="freq" value="30.0"/>
+    <param name="sensor_timeout" value="1.0"/>
+    <param name="publish_tf" value="true"/>
+    <param name="odom_used" value="true"/>
+    <param name="imu_used" value="false"/>
+    <param name="vo_used" value="false"/>
+  </node-->
+
+
+  <!-- throttling -->
+  <node pkg="nodelet" type="nodelet" name="pointcloud_throttle" args="load pointcloud_to_laserscan/CloudThrottle openni_manager" respawn="true">
+    <param name="max_rate" value="20.0"/>
+    <remap from="cloud_in" to="/camera/depth/points"/>
+    <remap from="cloud_out" to="cloud_throttled"/>
+  </node>
+
+  <!-- Fake Laser -->
+  <node pkg="nodelet" type="nodelet" name="kinect_laser" args="load pointcloud_to_laserscan/CloudToScan openni_manager" respawn="true">
+    <param name="output_frame_id" value="/camera_depth_frame"/>
+    <!-- heights are in the (optical?) frame of the kinect -->
+    <param name="min_height" value="-0.15"/>
+    <param name="max_height" value="0.15"/>
+    <remap from="cloud" to="/cloud_throttled"/>
+  </node>
+
+  <!-- Fake Laser (narrow one, for localization -->
+  <node pkg="nodelet" type="nodelet" name="kinect_laser_narrow" args="load pointcloud_to_laserscan/CloudToScan openni_manager" respawn="true">
+    <param name="output_frame_id" value="/camera_depth_frame"/>
+    <!-- heights are in the (optical?) frame of the kinect -->
+    <param name="min_height" value="-0.025"/>
+    <param name="max_height" value="0.025"/>
+    <remap from="cloud" to="/cloud_throttled"/>
+    <remap from="scan" to="/narrow_scan"/>
+  </node>
+
+
+
+    <!-- Filter for base laser shadowing/veiling -->
+    <node pkg="laser_filters" type="scan_to_cloud_filter_chain" respawn="true" name="base_shadow_filter" >
+        <remap from="scan" to="base_scan/scan" />
+        <remap from="cloud_filtered" to="base_scan/shadow_filtered" />
+        <param name="target_frame" value="base_footprint" />
+        <param name="high_fidelity" value="false" />
+        <rosparam command="load" file="$(find botmovil_description)/params/shadow_filter.yaml" />
+    </node>
+
+    <!-- Filter for base laser scans that hit the body of the robot -->
+    <node pkg="robot_self_filter" type="self_filter" name="base_laser_self_filter" respawn="true" output="screen" >
+        <remap from="cloud_in" to="base_scan/shadow_filtered" />
+        <remap from="cloud_out" to="base_scan/marking" />
+        <param name="sensor_frame" type="string" value="base_scan_link" />
+        <rosparam file="$(find botmovil_description)/params/self_filter.yaml" command="load" />
+    </node>
+
+</launch>

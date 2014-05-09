@@ -1,0 +1,13 @@
+<launch>
+  
+  <!-- send AISoy1 urdf to param server -->
+  <include file="$(find aisoy_description)/robots/upload_aisoy.launch" />
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_aisoy_model" pkg="gazebo" type="spawn_model" args="$(optenv ROBOT_INITIAL_POSE) -unpause -urdf -param robot_description -model aisoy" respawn="false" output="screen" />
+
+  <!-- default bringup script -->
+  <include file="$(find aisoy_gazebo)/aisoy_bringup.launch" />
+
+</launch>
+

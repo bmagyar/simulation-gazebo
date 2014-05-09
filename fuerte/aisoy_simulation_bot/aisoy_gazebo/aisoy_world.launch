@@ -1,0 +1,14 @@
+<launch>
+  <!-- start gazebo with an empty plane -->
+  <param name="/use_sim_time" value="true" />
+
+ <!-- <node name="gazebo" pkg="gazebo" type="gazebo" args="-u $(find aisoy_gazebo)/worlds/empty.world" respawn="false" output="screen"/> -->
+	<node name="empty_world_server" pkg="gazebo" type="gazebo" args="-u $(find aisoy_gazebo)/worlds/empty.world" respawn="false" output="screen"/>
+  <node name="gazebo_gui" pkg="gazebo" type="gui" />
+
+  <include file="$(find aisoy_gazebo)/aisoy.launch"/>
+</launch>
+
+<!-- start empty world -->
+
+

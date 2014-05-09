@@ -1,0 +1,11 @@
+<launch>
+
+  <!-- start up empty world -->
+  <include file="$(find aisoy_gazebo)/empty_world_paused.launch"/>
+
+  <!-- start aisoy robot -->
+  <include file="$(find botmovil_gazebo)/launch/botmovil_aisoy1.launch"/>
+
+</launch>
+
+
